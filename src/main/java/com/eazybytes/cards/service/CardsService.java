@@ -30,6 +30,12 @@ public class CardsService implements ICardService {
 
     @Override
     public CardsDto getCardsById(String mobileNumber) {
-        return null;
+        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(mobileNumber);
+        CardsDto dto = null;
+        if (optionalCards.isPresent()) {
+            dto = new CardsDto();
+            CardsMapper.mapToCardsDto(optionalCards.get(), dto);
+        }
+        return dto;
     }
 }

@@ -67,4 +67,14 @@ public class CardsServiceTest {
 
         }
     }
+
+    @Test
+    public void testGetCardsByMobileNumber() {
+        CardsRepository mockRepo = mock(CardsRepository.class);
+        when(mockRepo.findByMobileNumber(dto1.getMobileNumber())).thenReturn(Optional.of(cards1));
+        classUnderTest = new CardsService(mockRepo);
+
+        CardsDto actual = classUnderTest.getCardsById(dto1.getMobileNumber());
+        Assertions.assertEquals(dto1.getTotalLimit(), actual.getTotalLimit());
+    }
 }
