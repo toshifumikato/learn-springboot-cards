@@ -4,7 +4,6 @@ import com.eazybytes.cards.dto.CardsDto;
 import com.eazybytes.cards.entity.Cards;
 import org.springframework.stereotype.Component;
 
-@Component
 public class CardsMapper {
     public static Cards mapToCards(CardsDto dto, Cards cards) {
         cards.setCardNumber(dto.getCardNumber());
