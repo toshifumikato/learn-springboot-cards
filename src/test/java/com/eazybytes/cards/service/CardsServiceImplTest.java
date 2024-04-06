@@ -13,9 +13,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
-public class CardsServiceTest {
+public class CardsServiceImplTest {
 
-    CardsService classUnderTest;
+    CardsServiceImpl classUnderTest;
     CardsDto dto1;
     Cards cards1;
 
@@ -46,7 +46,7 @@ public class CardsServiceTest {
     public void testCreateCards() {
         CardsRepository mockRepo = mock(CardsRepository.class);
         when(mockRepo.save(cards1)).thenReturn(cards1);
-        classUnderTest = new CardsService(mockRepo);
+        classUnderTest = new CardsServiceImpl(mockRepo);
         classUnderTest.createCards(dto1);
 //        verify(mockRepo).save(cards1);
     }
@@ -56,7 +56,7 @@ public class CardsServiceTest {
         CardsRepository mockRepo = mock(CardsRepository.class);
         when(mockRepo.findByMobileNumber(dto1.getMobileNumber())).thenReturn(Optional.empty());
         when(mockRepo.save(cards1)).thenReturn(cards1);
-        classUnderTest = new CardsService(mockRepo);
+        classUnderTest = new CardsServiceImpl(mockRepo);
         classUnderTest.createCards(dto1);
 
         when(mockRepo.findByMobileNumber(dto1.getMobileNumber())).thenReturn(Optional.of(cards1));
@@ -72,9 +72,14 @@ public class CardsServiceTest {
     public void testGetCardsByMobileNumber() {
         CardsRepository mockRepo = mock(CardsRepository.class);
         when(mockRepo.findByMobileNumber(dto1.getMobileNumber())).thenReturn(Optional.of(cards1));
-        classUnderTest = new CardsService(mockRepo);
+        classUnderTest = new CardsServiceImpl(mockRepo);
 
         CardsDto actual = classUnderTest.getCardsById(dto1.getMobileNumber());
         Assertions.assertEquals(dto1.getTotalLimit(), actual.getTotalLimit());
+    }
+
+    @Test
+    public void testUpdateCards() {
+        CardsRepository mockRepo = mock(CardsRepository.class);
     }
 }
