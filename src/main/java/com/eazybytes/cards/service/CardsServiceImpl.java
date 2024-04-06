@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CardsService implements ICardService {
+public class CardsServiceImpl implements ICardService {
     private CardsRepository cardsRepository;
 
-    public CardsService(CardsRepository cardsRepository) {
+    public CardsServiceImpl(CardsRepository cardsRepository) {
         this.cardsRepository = cardsRepository;
     }
 
@@ -37,5 +37,20 @@ public class CardsService implements ICardService {
             CardsMapper.mapToCardsDto(optionalCards.get(), dto);
         }
         return dto;
+    }
+
+    @Override
+    public CardsDto updateCards(CardsDto dto) {
+        Cards cards = new Cards();
+        Optional<Cards> optionalCards = cardsRepository.findByMobileNumber(dto.getMobileNumber());
+        if (optionalCards.isPresent()) {
+            cards = optionalCards.get();
+            CardsMapper.mapToCards(dto, cards);
+            cardsRepository.save(cards);
+            CardsMapper.mapToCardsDto(cards, dto);
+            return dto;
+        } else {
+            return dto;
+        }
     }
 }

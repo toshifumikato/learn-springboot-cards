@@ -1,12 +1,21 @@
 package com.eazybytes.cards.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class CardsDto {
     private Long cardId;
     private String mobileNumber;
     private String cardNumber;
     private String cardType;
+    @PositiveOrZero(message = "Total limit must be zero or greater than zero")
+    @Schema(
+            description = "Total limit amount", example = "500000"
+    )
     private Long totalLimit;
+    @PositiveOrZero
     private Long amountUsed;
+    @PositiveOrZero
     private Long availableAmount;
 
     public CardsDto() {
