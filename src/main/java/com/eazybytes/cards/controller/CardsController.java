@@ -4,6 +4,7 @@ import com.eazybytes.cards.constants.CardsConstants;
 import com.eazybytes.cards.dto.CardsDto;
 import com.eazybytes.cards.dto.ResponseDto;
 import com.eazybytes.cards.service.ICardService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +28,7 @@ public class CardsController {
     }
 
     @PostMapping(path = "/cards")
-    public ResponseEntity<ResponseDto> createCards(@RequestBody CardsDto dto) {
+    public ResponseEntity<ResponseDto> createCards(@Valid @RequestBody CardsDto dto) {
         cardService.createCards(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(CardsConstants.STATUS_201, CardsConstants.MESSAGE_201));
     }
